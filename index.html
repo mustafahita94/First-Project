@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 40px 24px;
+      font-family: "Poppins", "Segoe UI", sans-serif;
+      color: #2d2a4a;
+      background: #8b6cf6;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 8% 18%, #c4b5fd 0 18%, transparent 19%),
+        radial-gradient(circle at 92% 8%, #a78bfa 0 22%, transparent 23%),
+        radial-gradient(ellipse at 78% 92%, #7c3aed 0 28%, transparent 29%),
+        radial-gradient(ellipse at 0% 100%, #6d28d9 0 24%, transparent 25%),
+        linear-gradient(160deg, #b794f6 0%, #8b5cf6 42%, #7c3aed 100%);
+    }
+
+    .bg span {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .bg span:nth-child(1) {
+      width: 420px;
+      height: 420px;
+      top: -160px;
+      left: -80px;
+      background: #d8b4fe;
+      opacity: 0.55;
+    }
+
+    .bg span:nth-child(2) {
+      width: 280px;
+      height: 280px;
+      right: -40px;
+      bottom: -60px;
+      background: #6d28d9;
+      opacity: 0.45;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(1040px, 100%);
+      min-height: 560px;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      background: #fff;
+      box-shadow: 0 24px 60px rgba(76, 29, 149, 0.18);
+    }
+
+    .form-panel {
+      padding: 52px 48px 40px 64px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.1;
+      font-weight: 700;
+      color: #1e1b4b;
+    }
+
+    .signup {
+      margin: 8px 0 22px;
+      font-size: 13.5px;
+      color: #6b7280;
+    }
+
+    .signup a,
+    .forgot {
+      color: #7c3aed;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .signup a:hover,
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #3f3a5a;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .label-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .forgot {
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      font: inherit;
+      font-size: 14px;
+      color: #374151;
+      outline: none;
+      background: #fff;
+    }
+
+    input::placeholder {
+      color: #c5c8d0;
+    }
+
+    input:focus {
+      border-color: #a78bfa;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 0 22px;
+      font-size: 13.5px;
+      color: #9ca3af;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .remember input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: #7c3aed;
+    }
+
+    .login-btn {
+      width: 100%;
+      height: 46px;
+      border: 0;
+      border-radius: 6px;
+      background: #7c3aed;
+      color: #fff;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      cursor: pointer;
+    }
+
+    .login-btn:hover {
+      background: #6d28d9;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 26px 0 18px;
+      color: #c4c4c4;
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #ececec;
+    }
+
+    .socials {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social {
+      flex: 1;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 4px;
+      background: #fff;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .social.google {
+      border: 1px solid #f3d1c4;
+      color: #4b5563;
+    }
+
+    .social.facebook {
+      border: 1px solid #bfdbfe;
+      color: #3b5998;
+    }
+
+    .social:hover {
+      background: #fafafa;
+    }
+
+    .art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 28px 24px 0;
+    }
+
+    .art svg {
+      width: min(520px, 100%);
+      height: auto;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        overflow: auto;
+        padding: 24px 16px;
+      }
+
+      .card {
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+
+      .form-panel {
+        padding: 40px 28px 36px;
+      }
+
+      .art {
+        padding: 0 16px 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <span></span>
+    <span></span>
+  </div>
+
+  <main class="card">
+    <section class="form-panel">
+      <h1>Login</h1>
+      <p class="signup">Doesn't have an account yet? <a href="#signup">Sign Up</a></p>
+
+      <form action="#login" method="post" onsubmit="event.preventDefault()">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <div class="label-row">
+            <label for="password">Password</label>
+            <a class="forgot" href="#forgot">Forgot Password?</a>
+          </div>
+          <input id="password" name="password" type="password" placeholder="Enter 6 character or more" minlength="6" autocomplete="current-password" required>
+        </div>
+
+        <label class="remember">
+          <input type="checkbox" name="remember">
+          Remember me
+        </label>
+
+        <button class="login-btn" type="submit">LOGIN</button>
+      </form>
+
+      <p class="divider">or login with</p>
+
+      <div class="socials">
+        <button class="social google" type="button">
+          <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true">
+            <path fill="#4285F4" d="M17.6 9.2c0-.6-.1-1.2-.2-1.8H9v3.4h4.8a4.1 4.1 0 0 1-1.8 2.7v2.2h2.9c1.7-1.6 2.7-3.9 2.7-6.5z"/>
+            <path fill="#34A853" d="M9 18c2.4 0 4.5-.8 6-2.2l-2.9-2.2c-.8.6-1.9.9-3.1.9-2.4 0-4.4-1.6-5.1-3.8H.9v2.3A9 9 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.9 10.7A5.4 5.4 0 0 1 3.6 9c0-.6.1-1.2.3-1.7V5H.9A9 9 0 0 0 0 9c0 1.5.3 2.8.9 4l3-2.3z"/>
+            <path fill="#EA4335" d="M9 3.6c1.3 0 2.5.5 3.4 1.3l2.6-2.6A9 9 0 0 0 .9 5l3 2.3C4.6 5.2 6.6 3.6 9 3.6z"/>
+          </svg>
+          Google
+        </button>
+        <button class="social facebook" type="button">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <rect width="16" height="16" rx="2" fill="#1877F2"/>
+            <path fill="#fff" d="M11 8.5H9.3V14H7V8.5H5.7V6.4H7V5.1c0-1.3.6-3.3 3.3-3.3l2.4.1v2.2h-1.8c-.3 0-.7.1-.7.8v1.5h2.4L11 8.5z"/>
+          </svg>
+          Facebook
+        </button>
+      </div>
+    </section>
+
+    <section class="art" aria-hidden="true">
+      <svg viewBox="0 0 640 460" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="340" cy="430" rx="210" ry="12" fill="#f3e8ff"/>
+
+        <path d="M250 268 L214 418 H236 L272 268 Z" fill="#c4b5fd"/>
+        <path d="M500 268 L536 418 H514 L478 268 Z" fill="#c4b5fd"/>
+        <rect x="236" y="252" width="292" height="16" rx="2" fill="#f7f4ff"/>
+
+        <rect x="78" y="196" width="86" height="128" rx="18" fill="#eadcff"/>
+        <rect x="66" y="308" width="124" height="16" rx="6" fill="#d8c4fb"/>
+        <rect x="86" y="324" width="10" height="72" rx="3" fill="#c4b5fd"/>
+        <rect x="156" y="324" width="10" height="72" rx="3" fill="#c4b5fd"/>
+
+        <path d="M118 168 C92 196 86 260 98 328 L128 334 C114 268 118 206 146 172 Z" fill="#241833"/>
+        <path d="M132 332 L156 348 L148 412 L124 408 Z" fill="#4a445f"/>
+        <path d="M156 340 L198 362 L206 412 L170 416 Z" fill="#3c3652"/>
+        <ellipse cx="142" cy="416" rx="22" ry="8" fill="#1c1917"/>
+        <ellipse cx="196" cy="418" rx="24" ry="8" fill="#1c1917"/>
+
+        <path d="M136 186 H184 C206 198 214 228 210 262 L146 250 C138 220 132 198 136 186 Z" fill="#7c3aed"/>
+        <rect x="152" y="174" width="18" height="18" rx="6" fill="#f6d0c4"/>
+        <circle cx="172" cy="148" r="34" fill="#f6d0c4"/>
+        <path d="M140 146 C146 104 206 104 208 150 C196 124 158 118 140 146 Z" fill="#241833"/>
+        <path d="M196 132 C210 140 214 162 202 170 C210 150 204 136 196 132 Z" fill="#241833"/>
+        <path d="M198 150 Q210 154 206 164" stroke="#e7b5a8" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+        <rect x="300" y="108" width="156" height="128" rx="10" fill="#e7e2f2"/>
+        <rect x="310" y="118" width="136" height="100" rx="4" fill="#fff"/>
+        <rect x="338" y="136" width="80" height="68" rx="6" fill="#faf8ff" stroke="#efeaf8"/>
+        <circle cx="378" cy="158" r="14" fill="#ddd6fe"/>
+        <circle cx="378" cy="154" r="6" fill="#a78bfa"/>
+        <path d="M364 176c3-8 25-8 28 0v8h-28v-8z" fill="#c4b5fd"/>
+        <rect x="358" y="236" width="40" height="12" fill="#ddd8ea"/>
+        <rect x="338" y="246" width="80" height="8" rx="2" fill="#e4dff0"/>
+
+        <rect x="468" y="176" width="16" height="76" rx="2" fill="#34d399"/>
+        <rect x="486" y="164" width="16" height="88" rx="2" fill="#facc15"/>
+        <rect x="504" y="184" width="14" height="68" rx="2" fill="#60a5fa"/>
+
+        <rect x="444" y="230" width="20" height="16" rx="3" fill="#fb7185"/>
+        <path d="M464 234c8 2 8 10 0 12" stroke="#fb7185" stroke-width="2.5" fill="none"/>
+
+        <rect x="262" y="242" width="96" height="10" rx="2" fill="#efe8ff"/>
+
+        <path d="M176 214 C214 236 250 252 292 258 L298 246 C252 238 214 220 182 200 Z" fill="#6d28d9"/>
+        <ellipse cx="300" cy="252" rx="12" ry="7" fill="#f6d0c4"/>
+
+        <rect x="360" y="348" width="62" height="38" rx="5" fill="#7eb6ff"/>
+        <path d="M378 348 v-8 h26 v8" stroke="#3b82f6" stroke-width="4" fill="none"/>
+        <rect x="384" y="360" width="14" height="8" rx="1" fill="#dbeafe"/>
+
+        <path d="M560 360 h40 l-6 46 h-28 z" fill="#5b21b6"/>
+        <path d="M576 360 C548 328 534 292 566 268 C572 312 578 340 576 360 Z" fill="#f472b6"/>
+        <path d="M582 356 C612 324 642 318 634 278 C604 310 590 338 582 356 Z" fill="#7c3aed"/>
+        <path d="M574 352 C560 318 586 286 596 262" stroke="#4ade80" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+        <circle cx="292" cy="78" r="18" fill="#fb923c"/>
+        <rect x="285" y="72" width="14" height="10" rx="2" stroke="#fff" stroke-width="1.7" fill="none"/>
+        <path d="M288 72 v-3 a4 4 0 0 1 8 0 v3" stroke="#fff" stroke-width="1.7" fill="none"/>
+
+        <circle cx="338" cy="48" r="17" fill="#f472b6"/>
+        <rect x="330" y="44" width="16" height="11" rx="1.5" stroke="#fff" stroke-width="1.7" fill="none"/>
+        <path d="M330 48 l8 5 8-5" stroke="#fff" stroke-width="1.7" fill="none"/>
+
+        <circle cx="386" cy="34" r="16" fill="#4ade80"/>
+        <path d="M378 34 l5 5 9-10" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <circle cx="432" cy="58" r="17" fill="#60a5fa"/>
+        <circle cx="432" cy="54" r="4.5" fill="#fff"/>
+        <path d="M423 66 c2-6 16-6 18 0" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+        <circle cx="262" cy="104" r="4" fill="#ddd6fe"/>
+        <circle cx="318" cy="22" r="3" fill="#f9a8d4"/>
+        <circle cx="410" cy="18" r="3" fill="#86efac"/>
+        <circle cx="458" cy="36" r="3" fill="#93c5fd"/>
+        <circle cx="270" cy="64" r="2.5" fill="#fdba74"/>
+      </svg>
+    </section>
+  </main>
+</body>
+</html>
